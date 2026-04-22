@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Yasmin ❤️</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- CORAÇÕES -->
+<div class="hearts" id="hearts"></div>
+
+<!-- MÚSICA -->
+<audio autoplay loop>
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container" id="game">
+
+  <!-- INÍCIO -->
+  <div id="fase1">
+    <img src="WhatsApp Image 2026-04-22 at 09.08.16.jpeg" class="foto">
+    <h1>Yasmin</h1>
+    <p>Preparei algo especial para você ❤️</p>
+    <button onclick="trocar(2)">Começar</button>
+  </div>
+
+  <!-- PERGUNTA 1 -->
+  <div id="fase2" style="display:none;">
+    <h1>Pergunta</h1>
+    <p>Qual foi o lugar onde a gente se conheceu?</p>
+    <input id="r1">
+    <button onclick="check1()">Responder</button>
+  </div>
+
+  <!-- PERGUNTA 2 -->
+  <div id="fase3" style="display:none;">
+    <h1>Continue</h1>
+    <p>Qual é a nossa data especial?</p>
+    <input id="r2">
+    <button onclick="check2()">Responder</button>
+  </div>
+
+  <!-- DESAFIO -->
+  <div id="fase4" style="display:none;">
+    <h1>Último passo 😏</h1>
+    <p>Clique no botão</p>
+    <button id="fugir" onmouseover="fugir()">Clique</button>
+  </div>
+
+  <!-- FINAL -->
+  <div id="final" style="display:none;">
+    <h1>Yasmin ❤️</h1>
+
+    <p class="contador">
+      Desde 01/01/25 estamos juntos há:
+      <br><br>
+      <span id="tempo"></span>
+    </p>
+
+    <p class="poema">
+      Entre tantos caminhos, encontrei você.<br>
+      E desde então, tudo passou a fazer sentido.<br><br>
+
+      Seu olhar acalma, sua presença transforma,<br>
+      e cada momento ao seu lado se torna único.<br><br>
+
+      Não é apenas sobre amar,<br>
+      é sobre escolher você todos os dias.<br><br>
+
+      E eu escolheria você, sempre ❤️
+    </p>
+
+    <!-- SLIDESHOW -->
+    <div class="slideshow">
+      <img id="slide" src="foto1.jpg">
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+// TROCAR FASE
+function trocar(f) {
+  document.querySelectorAll("#game > div").forEach(e => e.style.display = "none");
+  document.getElementById("fase" + f).style.display = "block";
+}
+
+// RESPOSTAS
+function check1() {
+  let v = document.getElementById("r1").value.toLowerCase();
+  if (v.includes("tiktok")) {
+    trocar(3);
+  } else {
+    alert("Tente novamente 😅");
+  }
+}
+
+function check2() {
+  let v = document.getElementById("r2").value.toLowerCase();
+  if (v.includes("01/01/25") || v.includes("1/1/25")) {
+    trocar(4);
+  } else {
+    alert("Tente novamente 😅");
+  }
+}
+
+// BOTÃO QUE FOGE
+function fugir() {
+  let b = document.getElementById("fugir");
+  b.style.position = "absolute";
+  b.style.top = Math.random() * 80 + "%";
+  b.style.left = Math.random() * 80 + "%";
+}
+
+// FINAL
+document.addEventListener("click", function(e){
+  if(e.target.id === "fugir"){
+    document.querySelectorAll("#game > div").forEach(e => e.style.display = "none");
+    document.getElementById("final").style.display = "block";
+  }
+});
+
+// CONTADOR
+function atualizarTempo() {
+  const inicio = new Date("2025-01-01T00:00:00");
+  const agora = new Date();
+
+  let diff = agora - inicio;
+
+  let segundos = Math.floor(diff / 1000);
+  let minutos = Math.floor(segundos / 60);
+  let horas = Math.floor(minutos / 60);
+  let dias = Math.floor(horas / 24);
+  let anos = Math.floor(dias / 365);
+
+  segundos %= 60;
+  minutos %= 60;
+  horas %= 24;
+  dias %= 365;
+
+  document.getElementById("tempo").innerHTML =
+    anos + " anos, " +
+    dias + " dias, " +
+    horas + " horas, " +
+    minutos + " minutos e " +
+    segundos + " segundos";
+}
+setInterval(atualizarTempo, 1000);
+
+// CORAÇÕES
+function criarCoracao() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "❤";
+
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (15 + Math.random() * 20) + "px";
+  heart.style.animationDuration = (3 + Math.random() * 5) + "s";
+
+  document.getElementById("hearts").appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 8000);
+}
+setInterval(criarCoracao, 300);
+
+// SLIDESHOW
+let fotos = ["foto1.jpg","foto2.jpg","foto3.jpg","foto4.jpg","foto5.jpg"];
+let i = 0;
+
+function trocarFoto() {
+  i = (i + 1) % fotos.length;
+  document.getElementById("slide").src = fotos[i];
+}
+setInterval(trocarFoto, 3000);
+
+</script>
+
+</body>
+</html>
